@@ -1,0 +1,22 @@
+### POST Users
+POST https://172.17.0.2/api/usuarios HTTP/1.1
+content-type: application/json
+
+{
+  "nome": "John Doe",
+  "dataNascimento": "1980-01-01",
+  "sexo": "M",
+  "logradouro": "Rua Exemplo",
+  "numero": 123,
+  "setor": "Praça da Sé",
+  "cidade": "São Paulo",
+  "uf": "SP",
+  "alergias": [
+    {
+      "nome": "Amendoim"
+    },
+    {
+      "nome": "Pólen"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+    "java.home": "/usr/lib/jvm/java-21-openjdk",
+    "java.compile.nullAnalysis.mode": "automatic"
+}

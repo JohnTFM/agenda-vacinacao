@@ -10,18 +10,18 @@ import java.io.*;
 import java.nio.charset.Charset;
 
 @Controller
-public class Renderizador  {
+public class Renderizador {
 
     private static final String CAMINHO_INDEX_HTML = "/static/index.html";
 
-    private ResponseEntity renderizarReact(){
+    @SuppressWarnings("rawtypes")
+    private ResponseEntity renderizarReact() {
         ResponseEntity resposta;
-        try{
-         resposta = ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(
-                new ClassPathResource(CAMINHO_INDEX_HTML).getContentAsString(Charset.forName("UTF-8"))
-        );
+        try {
+            resposta = ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(
+                    new ClassPathResource(CAMINHO_INDEX_HTML).getContentAsString(Charset.forName("UTF-8")));
 
-        }catch (IOException e){
+        } catch (IOException e) {
             return ResponseEntity.internalServerError().contentType(MediaType.TEXT_HTML).body("<h1>No Content</h1>");
         }
 
@@ -29,7 +29,7 @@ public class Renderizador  {
 
     }
 
-
+    @SuppressWarnings("rawtypes")
     @GetMapping(value = {
             "/{caminho:^(?!api)(?!.*\\.[a-zA-Z0-9]+$).*$}",
             "/{caminho:^(?!api)(?!.*\\.[a-zA-Z0-9]+$).*$}/{final:^(?!api)(?!.*\\.[a-zA-Z0-9]+$).*$}",
@@ -39,7 +39,7 @@ public class Renderizador  {
         return this.renderizarReact();
     }
 
-
+    @SuppressWarnings("rawtypes")
     @GetMapping(value = "/")
     public ResponseEntity r2() {
         return this.renderizarReact();
