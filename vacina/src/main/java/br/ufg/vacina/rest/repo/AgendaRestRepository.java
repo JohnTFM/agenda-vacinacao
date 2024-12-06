@@ -3,6 +3,7 @@ package br.ufg.vacina.rest.repo;
 import java.time.LocalDate;
 import java.util.List;
 
+import br.ufg.vacina.modelo.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -23,4 +24,5 @@ public interface AgendaRestRepository extends JpaRepository<Agenda, Long> {
         return agendas;
     }
 
+    List<Agenda> findByUsuario(Usuario usuario);
 }

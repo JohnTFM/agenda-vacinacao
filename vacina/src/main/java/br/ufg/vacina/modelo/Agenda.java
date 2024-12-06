@@ -30,9 +30,9 @@ public class Agenda {
     private LocalDate dataSituacao;
     private String observacoes;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Vacina vacina;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
 }

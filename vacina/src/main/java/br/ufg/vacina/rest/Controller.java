@@ -19,6 +19,7 @@ public class Controller {
     private final AgendaRestRepository agendaRestRepository;
     private final AlergiaRestRepository alergiaRestRepository;
 
+
     // CRUD for Usuario
     @PostMapping("/usuarios")
     public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
