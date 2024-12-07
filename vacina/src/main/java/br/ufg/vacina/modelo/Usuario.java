@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,6 +26,22 @@ public class Usuario {
     private String cidade;
     private String uf;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     private List<Alergia> alergias;
+
+    public List<Alergia> getAlergias() {
+        if(alergias == null) {
+            return new ArrayList<>();
+        }
+        return alergias;
+    }
+
+    public void addAlergia(Alergia alergia) {
+        if(alergias == null) {
+            return;
+        }
+        this.alergias.add(alergia);
+        alergia.getUsuarios().add(this);
+    }
+
 }

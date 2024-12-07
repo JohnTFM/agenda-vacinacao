@@ -22,5 +22,5 @@ public class Alergia {
     private String descricao;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Usuario> usuario;
+    private List<Usuario> usuarios;
 }

@@ -1,7 +1,9 @@
 package br.ufg.vacina.rest;
 
 import br.ufg.vacina.modelo.*;
+import br.ufg.vacina.rest.records.UsuarioDTO;
 import br.ufg.vacina.rest.repo.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,46 @@ public class Controller {
     public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
         return ResponseEntity.ok(usuarioRestRepository.save(usuario));
     }
+
+    @PostMapping("/usuarios-com-alergia")
+    @Transactional
+    public ResponseEntity<Usuario> createUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+        Usuario usuario;
+
+        if (usuarioDTO.getId() != null) {
+            usuario = usuarioRestRepository.findById(usuarioDTO.getId()).orElse(new Usuario());
+        } else {
+            usuario = new Usuario();
+        }
+
+        usuario.setNome(usuarioDTO.getNome());
+        usuario.setDataNascimento(usuarioDTO.getDataNascimento());
+        usuario.setSexo(usuarioDTO.getSexo());
+        usuario.setLogradouro(usuarioDTO.getLogradouro());
+        usuario.setNumero(usuarioDTO.getNumero());
+        usuario.setSetor(usuarioDTO.getSetor());
+        usuario.setCidade(usuarioDTO.getCidade());
+        usuario.setUf(usuarioDTO.getUf());
+
+        // Busca as alergias pelo ID
+        var alergias = alergiaRestRepository.findAllById(
+                usuarioDTO.getAlergias().stream().map(Long::valueOf).toList()
+        );
+
+        // Limpa as alergias existentes e atualiza
+        usuario.getAlergias().clear();
+        usuarioRestRepository.save(usuario);
+
+        alergias.forEach(usuario::addAlergia); // Atualiza ambos os lados
+
+        // Salva o usuário
+        usuarioRestRepository.save(usuario);
+
+        return ResponseEntity.ok(usuario);
+    }
+
+
+
 
     @PutMapping("/usuarios/{id}")
     public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
