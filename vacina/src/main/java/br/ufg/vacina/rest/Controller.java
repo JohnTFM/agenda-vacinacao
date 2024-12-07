@@ -20,7 +20,18 @@ public class Controller {
     private final AlergiaRestRepository alergiaRestRepository;
 
 
-    // CRUD for Usuario
+    @GetMapping("/usuarios")
+    public ResponseEntity<List<Usuario>> getAllUsuarios() {
+        List<Usuario> usuarios = usuarioRestRepository.findAll();
+        return ResponseEntity.ok(usuarios);
+    }
+
+    @GetMapping("/usuarios/{id}")
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id) {
+        Optional<Usuario> usuario = usuarioRestRepository.findById(id);
+        return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/usuarios")
     public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
         return ResponseEntity.ok(usuarioRestRepository.save(usuario));
@@ -46,6 +57,19 @@ public class Controller {
     }
 
     // CRUD for Vacina
+
+    @GetMapping("/vacinas")
+    public ResponseEntity<List<Vacina>> getAllVacinas() {
+        List<Vacina> vacinas = vacinaRestRepository.findAll();
+        return ResponseEntity.ok(vacinas);
+    }
+
+    @GetMapping("/vacinas/{id}")
+    public ResponseEntity<Vacina> getVacinaById(@PathVariable Long id) {
+        Optional<Vacina> vacina = vacinaRestRepository.findById(id);
+        return vacina.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/vacinas")
     public ResponseEntity<Vacina> createVacina(@RequestBody Vacina vacina) {
         return ResponseEntity.ok(vacinaRestRepository.save(vacina));
@@ -71,6 +95,19 @@ public class Controller {
     }
 
     // CRUD for Agenda
+
+    @GetMapping("/agendas")
+    public ResponseEntity<List<Agenda>> getAllAgendas() {
+        List<Agenda> agendas = agendaRestRepository.findAll();
+        return ResponseEntity.ok(agendas);
+    }
+
+    @GetMapping("/agendas/{id}")
+    public ResponseEntity<Agenda> getAgendaById(@PathVariable Long id) {
+        Optional<Agenda> agenda = agendaRestRepository.findById(id);
+        return agenda.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/agendas")
     public ResponseEntity<Agenda> createAgenda(@RequestBody Agenda agenda) {
         return ResponseEntity.ok(agendaRestRepository.save(agenda));
@@ -102,6 +139,19 @@ public class Controller {
     }
 
     // CRUD for Alergia
+
+    @GetMapping("/alergias")
+    public ResponseEntity<List<Alergia>> getAllAlergias() {
+        List<Alergia> alergias = alergiaRestRepository.findAll();
+        return ResponseEntity.ok(alergias);
+    }
+
+    @GetMapping("/alergias/{id}")
+    public ResponseEntity<Alergia> getAlergiaById(@PathVariable Long id) {
+        Optional<Alergia> alergia = alergiaRestRepository.findById(id);
+        return alergia.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/alergias")
     public ResponseEntity<Alergia> createAlergia(@RequestBody Alergia alergia) {
         return ResponseEntity.ok(alergiaRestRepository.save(alergia));
