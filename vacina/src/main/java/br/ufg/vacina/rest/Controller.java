@@ -25,6 +25,12 @@ public class Controller {
     @GetMapping("/usuarios")
     public ResponseEntity<List<Usuario>> getAllUsuarios() {
         List<Usuario> usuarios = usuarioRestRepository.findAll();
+        usuarios.forEach(usuario->{
+            usuario.getAlergias().forEach(u->{
+                u.setUsuarios(null);
+            });
+        });
+
         return ResponseEntity.ok(usuarios);
     }
 
@@ -185,6 +191,9 @@ public class Controller {
     @GetMapping("/alergias")
     public ResponseEntity<List<Alergia>> getAllAlergias() {
         List<Alergia> alergias = alergiaRestRepository.findAll();
+        alergias.forEach(a->{
+            a.setUsuarios(null);
+        });
         return ResponseEntity.ok(alergias);
     }
 
