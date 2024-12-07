@@ -1,0 +1,16 @@
+Foi utilizado para manuseador de pacote o Gradle em vez do Maven.
+
+Pré requisitos: 
+	1. ter um postgres rodando na porta 5432 no localhost onde o código foi feito
+	2. ter um banco chamado "vacina" criado. 
+	3. ter uma ROLE (usuário) chamado "postgres" ( já vem por padrão )
+	4. a role/usuário postgres tem que ter a senha "password" (consulte o application.properties)
+	5. JDK 21
+
+Para rodar o projeto, basta fazer:
+	./gradlew build -x tests 
+	cd build
+	cd libs
+	java -jar vacina-0.0.1-SNAPSHOT.jar
+	
+Acesse: localhost:8080
