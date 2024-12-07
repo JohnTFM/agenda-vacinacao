@@ -75,7 +75,6 @@ export function useCreateUsuario() {
         ...usuario,
         alergias: usuario.alergias ? [usuario.alergias] : undefined,
       };
-
       const response = await api.post("/usuarios", formattedUsuario);
       return response.data;
     },
@@ -89,12 +88,17 @@ export function useUpdateUsuario() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (usuario) => {
+
+      if(Array.isArray(usuario.alergias)) {
+        usuario.alergias = undefined;
+      }
+
       const formattedUsuario = {
         ...usuario,
-        alergias: usuario.alergias ? [{ id: usuario.alergias }] : undefined,
+        alergias: usuario.alergias ? [usuario.alergias] : undefined,
       };
-      const response = await api.put(
-        `/usuarios/${usuario.id}`,
+      const response = await api.post(
+        `/usuarios`,
         formattedUsuario
       );
       return response.data;

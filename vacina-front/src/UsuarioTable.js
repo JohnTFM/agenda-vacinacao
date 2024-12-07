@@ -104,8 +104,8 @@ const UsuarioTable = () => {
           value: alergia.id,
         })),
         Cell: ({ cell }) => {
-          const alergiaId = cell.getValue();
-          const alergia = fetchedAlergias.find((a) => a.id === alergiaId);
+          const alergiaS = cell.getValue();
+          const alergia = fetchedAlergias.find((a) => a.id === alergiaS[0]?.id);
           return alergia ? alergia.nome : "Nenhuma alergia";
         },
       },

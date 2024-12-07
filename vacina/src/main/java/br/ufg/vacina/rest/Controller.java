@@ -40,12 +40,12 @@ public class Controller {
         return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/usuarios")
-    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
-        return ResponseEntity.ok(usuarioRestRepository.save(usuario));
-    }
+//    @PostMapping("/usuarios")
+//    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
+//        return ResponseEntity.ok(usuarioRestRepository.save(usuario));
+//    }
 
-    @PostMapping("/usuarios-com-alergia")
+    @PostMapping("/usuarios")
     @Transactional
     public ResponseEntity<Usuario> createUsuario(@RequestBody UsuarioDTO usuarioDTO) {
         Usuario usuario;
@@ -85,15 +85,15 @@ public class Controller {
 
 
 
-    @PutMapping("/usuarios/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
-        Optional<Usuario> existingUsuario = usuarioRestRepository.findById(id);
-        if (existingUsuario.isPresent()) {
-            usuario.setId(id);
-            return ResponseEntity.ok(usuarioRestRepository.save(usuario));
-        }
-        return ResponseEntity.notFound().build();
-    }
+//    @PutMapping("/usuarios/{id}")
+//    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+//        Optional<Usuario> existingUsuario = usuarioRestRepository.findById(id);
+//        if (existingUsuario.isPresent()) {
+//            usuario.setId(id);
+//            return ResponseEntity.ok(usuarioRestRepository.save(usuario));
+//        }
+//        return ResponseEntity.notFound().build();
+//    }
 
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable Long id) {
@@ -147,6 +147,11 @@ public class Controller {
     @GetMapping("/agendas")
     public ResponseEntity<List<Agenda>> getAllAgendas() {
         List<Agenda> agendas = agendaRestRepository.findAll();
+        agendas.forEach(a->{
+            a.getUsuario().getAlergias().forEach(al->{
+                al.setUsuarios(null);
+            });
+        });
         return ResponseEntity.ok(agendas);
     }
 

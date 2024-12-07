@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,4 +24,10 @@ public class UsuarioDTO {
     private String uf;
     private List<String> alergias;
 
+    public List<String> getAlergias() {
+        if(this.alergias == null) {
+            return new ArrayList<>();
+        }
+        return this.alergias;
+    }
 }
